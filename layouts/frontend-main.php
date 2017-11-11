@@ -3,14 +3,14 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
+use kouosl\theme\helpers\Html;
+use kouosl\theme\widgets\Nav;
+use kouosl\theme\widgets\NavBar;
+use kouosl\theme\widgets\Breadcrumbs;
 use common\widgets\Alert;
+use kouosl\theme\bundles\CustomAsset;
 
-AppAsset::register($this);
+CustomAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

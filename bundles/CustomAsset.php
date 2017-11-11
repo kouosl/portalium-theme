@@ -23,6 +23,9 @@ class CustomAsset extends AssetBundle {
      * @var array css assets
      */
     public $css = [
+        'css\site.css',
+        'css\custom.css'
+
     ];
 
     /**

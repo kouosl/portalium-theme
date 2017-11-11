@@ -9,7 +9,7 @@
 namespace kouosl\theme\widgets;
 
 
-class NavBar extends \yii\bootstrap\NavBar
+class ActionColumn extends \yii\grid\ActionColumn
 {
         public function init()
         {
