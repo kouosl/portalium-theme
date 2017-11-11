@@ -1,6 +1,6 @@
 <?php
 
-namespace diginova\theme;
+namespace kouosl\theme;
 
 use Yii; 
 
@@ -11,7 +11,7 @@ use Yii;
  */
 class Module extends \yii\base\Module
 {
-    //public $controllerNamespace = 'diginova\theme\controllers\backend';
+    //public $controllerNamespace = 'kouosl\theme\controllers\backend';
 
 
     public function init()
@@ -26,7 +26,7 @@ class Module extends \yii\base\Module
     	Yii::$app->i18n->translations['theme/*'] = [
 	    	'class' => 'yii\i18n\PhpMessageSource',
 	    	'sourceLanguage' => 'en-US',
-	    	'basePath' => '@diginova/theme/messages',
+	    	'basePath' => '@kouosl/theme/messages',
 	    	'fileMap' => [
 	    		'theme/theme' => 'theme.php',
 	    	],
@@ -38,7 +38,7 @@ class Module extends \yii\base\Module
     	Yii::$app->i18n->translations['theme/*'] = [
     	'class' => 'yii\i18n\PhpMessageSource',
     	'sourceLanguage' => 'en-US',
-    	'basePath' => '@diginova/theme/messages',
+    	'basePath' => '@kouosl/theme/messages',
     	'fileMap' => [
     	'theme/theme' => 'theme.php',
     	],
