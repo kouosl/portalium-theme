@@ -7,7 +7,7 @@ use kouosl\theme\helpers\Html;
 use kouosl\theme\widgets\Nav;
 use kouosl\theme\widgets\NavBar;
 use kouosl\theme\widgets\Breadcrumbs;
-use common\widgets\Alert;
+use kouosl\theme\widgets\Alert;
 use kouosl\theme\bundles\CustomAsset;
 
 CustomAsset::register($this);
