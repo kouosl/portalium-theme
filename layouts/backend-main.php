@@ -11,6 +11,16 @@ use kouosl\theme\widgets\Alert;
 use kouosl\theme\bundles\CustomAsset;
 
 CustomAsset::register($this);
+
+$languages = ['tr-TR' => 'Türkçe','en-US' => 'English'];
+
+$lang = yii::$app->session->get('lang');
+if(!$lang)
+    $lang = 'en-US';
+
+$activeLangLabel = $languages[$lang];
+unset($languages[$lang]);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -56,6 +66,13 @@ CustomAsset::register($this);
             . Html::endForm()
             . '</li>';
     }
+    $langItems = [];
+    foreach ($languages as $key => $value){
+        $langItems[] = ['label' => $value, 'url' => ['/site/site/lang','lang' => $key]];
+    }
+    $menuItems[] = ['label' => $activeLangLabel, 'url' => ['/site/site/lang','lang' => $lang],
+        'items' => $langItems,
+    ];
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,

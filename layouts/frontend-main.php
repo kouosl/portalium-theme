@@ -9,8 +9,20 @@ use kouosl\theme\widgets\NavBar;
 use kouosl\theme\widgets\Breadcrumbs;
 use kouosl\theme\widgets\Alert;
 use kouosl\theme\bundles\CustomAsset;
+use \kouosl\theme\Module;
 
 CustomAsset::register($this);
+
+$languages = ['tr-TR' => 'Türkçe','en-US' => 'English'];
+
+$lang = yii::$app->session->get('lang');
+if(!$lang)
+    $lang = 'en-US';
+
+$activeLangLabel = $languages[$lang];
+unset($languages[$lang]);
+
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -36,14 +48,14 @@ CustomAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/site/index']],
-        ['label' => 'Sample', 'url' => ['/sample/default/index']],
-        ['label' => 'About', 'url' => ['/site/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/site/contact']],
+        ['label' => Module::t('theme','Home'), 'url' => ['/site/site/index']],
+        ['label' => Module::t('theme','Sample'), 'url' => ['/sample/default/index']],
+        ['label' => Module::t('theme','About'), 'url' => ['/site/site/about']],
+        ['label' => Module::t('theme','Contact'), 'url' => ['/site/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/site/login']];
+        $menuItems[] = ['label' => Module::t('theme','Sign Up'), 'url' => ['/site/site/signup']];
+        $menuItems[] = ['label' => Module::t('theme','Login'), 'url' => ['/site/site/login']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/site/logout'], 'post')
@@ -54,6 +66,15 @@ CustomAsset::register($this);
             . Html::endForm()
             . '</li>';
     }
+
+    $langItems = [];
+    foreach ($languages as $key => $value){
+        $langItems[] = ['label' => $value, 'url' => ['/site/site/lang','lang' => $key]];
+    }
+    $menuItems[] = ['label' => $activeLangLabel, 'url' => ['/site/site/lang','lang' => $lang],
+        'items' => $langItems,
+    ];
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
