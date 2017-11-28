@@ -3,14 +3,26 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
-use common\widgets\Alert;
+use kouosl\theme\helpers\Html;
+use kouosl\theme\widgets\Nav;
+use kouosl\theme\widgets\NavBar;
+use kouosl\theme\widgets\Breadcrumbs;
+use kouosl\theme\widgets\Alert;
+use kouosl\theme\bundles\CustomAsset;
+use \kouosl\theme\Module;
 
-AppAsset::register($this);
+CustomAsset::register($this);
+
+$languages = ['tr-TR' => 'Türkçe','en-US' => 'English'];
+
+$lang = yii::$app->session->get('lang');
+if(!$lang)
+    $lang = 'en-US';
+
+$activeLangLabel = $languages[$lang];
+unset($languages[$lang]);
+
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -36,16 +48,17 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => Module::t('theme','Home'), 'url' => ['/site/site/index']],
+        ['label' => Module::t('theme','Sample'), 'url' => ['/sample/default/index']],
+        ['label' => Module::t('theme','About'), 'url' => ['/site/site/about']],
+        ['label' => Module::t('theme','Contact'), 'url' => ['/site/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => Module::t('theme','Sign Up'), 'url' => ['/site/site/signup']];
+        $menuItems[] = ['label' => Module::t('theme','Login'), 'url' => ['/site/site/login']];
     } else {
         $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
+            . Html::beginForm(['/site/site/logout'], 'post')
             . Html::submitButton(
                 'Logout (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
@@ -53,6 +66,15 @@ AppAsset::register($this);
             . Html::endForm()
             . '</li>';
     }
+
+    $langItems = [];
+    foreach ($languages as $key => $value){
+        $langItems[] = ['label' => $value, 'url' => ['/site/site/lang','lang' => $key]];
+    }
+    $menuItems[] = ['label' => $activeLangLabel, 'url' => ['/site/site/lang','lang' => $lang],
+        'items' => $langItems,
+    ];
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
@@ -71,7 +93,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Kocaeli University Open Source Lab <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

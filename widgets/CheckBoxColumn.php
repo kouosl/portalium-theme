@@ -9,7 +9,7 @@
 namespace kouosl\theme\widgets;
 
 
-class NavBar extends \yii\bootstrap\NavBar
+class CheckBoxColumn extends \yii\grid\CheckboxColumn
 {
         public function init()
         {
