@@ -48,17 +48,17 @@ unset($languages[$lang]);
         ],
     ]);
     $menuItems = [
-        ['label' => Module::t('theme','Home'), 'url' => ['/site/site/index']],
+        ['label' => Module::t('theme','Home'), 'url' => ['/site/auth/index']],
         ['label' => Module::t('theme','Sample'), 'url' => ['/sample/default/index']],
-        ['label' => Module::t('theme','About'), 'url' => ['/site/site/about']],
-        ['label' => Module::t('theme','Contact'), 'url' => ['/site/site/contact']],
+        ['label' => Module::t('theme','About'), 'url' => ['/site/auth/about']],
+        ['label' => Module::t('theme','Contact'), 'url' => ['/site/auth/contact']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => Module::t('theme','Sign Up'), 'url' => ['/site/site/signup']];
-        $menuItems[] = ['label' => Module::t('theme','Login'), 'url' => ['/site/site/login']];
+        $menuItems[] = ['label' => Module::t('theme','Sign Up'), 'url' => ['/site/auth/signup']];
+        $menuItems[] = ['label' => Module::t('theme','Login'), 'url' => ['/site/auth/login']];
     } else {
         $menuItems[] = '<li>'
-            . Html::beginForm(['/site/site/logout'], 'post')
+            . Html::beginForm(['/site/auth/logout'], 'post')
             . Html::submitButton(
                 'Logout (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
@@ -69,9 +69,9 @@ unset($languages[$lang]);
 
     $langItems = [];
     foreach ($languages as $key => $value){
-        $langItems[] = ['label' => $value, 'url' => ['/site/site/lang','lang' => $key]];
+        $langItems[] = ['label' => $value, 'url' => ['/site/auth/lang','lang' => $key]];
     }
-    $menuItems[] = ['label' => $activeLangLabel, 'url' => ['/site/site/lang','lang' => $lang],
+    $menuItems[] = ['label' => $activeLangLabel, 'url' => ['/site/auth/lang','lang' => $lang],
         'items' => $langItems,
     ];
 
