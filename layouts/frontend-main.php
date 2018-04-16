@@ -48,7 +48,7 @@ unset($languages[$lang]);
         ],
     ]);
     $menuItems = [
-        ['label' => Module::t('theme','Home'), 'url' => ['/site/auth/index']],
+        ['label' => Module::t('theme','Home'), 'url' => ['/site/auth/home']],
         ['label' => Module::t('theme','Sample'), 'url' => ['/sample/default/index']],
         ['label' => Module::t('theme','About'), 'url' => ['/site/auth/about']],
         ['label' => Module::t('theme','Contact'), 'url' => ['/site/auth/contact']],

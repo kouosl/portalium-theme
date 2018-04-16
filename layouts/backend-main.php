@@ -46,13 +46,21 @@ unset($languages[$lang]);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/auth/index']],
+        ['label' => 'Home', 'url' => ['/site/auth/home']],
         ['label' => 'Sample', 'url' => ['/sample/samples/index'],
             'items' => [
                     ['label' => 'Create', 'url' => ['/sample/samples/create']],
                     ['label' => 'Manage', 'url' => ['/sample/samples/index']]
             ]
         ],
+        ['label' => 'Menu', 'url' => ['/menu/menu/index'],
+            'items' => [
+                    ['label' => 'Create', 'url' => ['/menu/menu/create']],
+                    ['label' => 'Manage', 'url' => ['/menu/menu/index']]
+            ]
+        ],
+        ['label' => 'Settings', 'url' => ['/site/setting']],
+
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/auth/login']];
