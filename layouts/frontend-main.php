@@ -10,14 +10,36 @@ use kouosl\theme\widgets\Breadcrumbs;
 use kouosl\theme\widgets\Alert;
 use kouosl\theme\bundles\CustomAsset;
 use \kouosl\theme\Module;
+use \kouosl\site\models\Setting;
 
 CustomAsset::register($this);
 
 $languages = ['tr-TR' => 'Türkçe','en-US' => 'English'];
+// $signup = Setting::findOne(['setting_key' =>  'signup']);
+// $contact = Setting::findOne(['setting_key' =>  'contact']);
+// $login = Setting::findOne(['setting_key' =>  'login']);
+// $about = Setting::findOne(['setting_key' =>  'about']);
+$settings = Setting::find()->asArray()->all();
+foreach ($settings as $setting){
+    $settings[$setting['setting_key']] = $setting['value'];
+}
 
-$lang = yii::$app->session->get('lang');
-if(!$lang)
-    $lang = 'en-US';
+ $lang = yii::$app->session->get('lang');
+// if(!$lang)
+// $lang = 'en-US';
+
+switch ($settings['language']) {
+    case 'EN':
+         $lang = 'en-US';
+         break;
+    case 'TR':
+         $lang = 'tr-TR';
+        break;
+    default:
+          $lang = 'en-US';
+        break;
+}
+yii::$app->session->set('lang',$lang);
 
 $activeLangLabel = $languages[$lang];
 unset($languages[$lang]);
@@ -50,12 +72,18 @@ unset($languages[$lang]);
     $menuItems = [
         ['label' => Module::t('theme','Home'), 'url' => ['/site/auth/home']],
         ['label' => Module::t('theme','Sample'), 'url' => ['/sample/default/index']],
-        ['label' => Module::t('theme','About'), 'url' => ['/site/auth/about']],
-        ['label' => Module::t('theme','Contact'), 'url' => ['/site/auth/contact']],
     ];
+    if($settings['about'] === 'true')
+         $menuItems[] = ['label' => Module::t('theme','About'), 'url' => ['/site/auth/about']];
+
+    if($settings['contact'] === 'true')
+      $menuItems[] =  ['label' => Module::t('theme','Contact'), 'url' => ['/site/auth/contact']];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => Module::t('theme','Sign Up'), 'url' => ['/site/auth/signup']];
-        $menuItems[] = ['label' => Module::t('theme','Login'), 'url' => ['/site/auth/login']];
+     
+        if($settings['signup'] === 'true')
+            $menuItems[] = ['label' => Module::t('theme','Sign Up'), 'url' => ['/site/auth/signup']];
+        if($settings['login'] === 'true')
+            $menuItems[] = ['label' => Module::t('theme','Login'), 'url' => ['/site/auth/login']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/auth/logout'], 'post')
@@ -66,6 +94,7 @@ unset($languages[$lang]);
             . Html::endForm()
             . '</li>';
     }
+    
 
     $langItems = [];
     foreach ($languages as $key => $value){
