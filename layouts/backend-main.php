@@ -46,7 +46,7 @@ unset($languages[$lang]);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/auth/home']],
+        ['label' => 'Home', 'url' => ['/site/home']],
         ['label' => 'Sample', 'url' => ['/sample/samples/index'],
             'items' => [
                     ['label' => 'Create', 'url' => ['/sample/samples/create']],
