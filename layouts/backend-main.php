@@ -46,19 +46,27 @@ unset($languages[$lang]);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/site/index']],
+        ['label' => 'Home', 'url' => ['/site/home']],
         ['label' => 'Sample', 'url' => ['/sample/samples/index'],
             'items' => [
                     ['label' => 'Create', 'url' => ['/sample/samples/create']],
                     ['label' => 'Manage', 'url' => ['/sample/samples/index']]
             ]
         ],
+        ['label' => 'Menu', 'url' => ['/menu/menu/index'],
+            'items' => [
+                    ['label' => 'Create', 'url' => ['/menu/menu/create']],
+                    ['label' => 'Manage', 'url' => ['/menu/menu/index']]
+            ]
+        ],
+        ['label' => 'Settings', 'url' => ['/site/setting']],
+
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/site/login']];
+        $menuItems[] = ['label' => 'Login', 'url' => ['/site/auth/login']];
     } else {
         $menuItems[] = '<li>'
-            . Html::beginForm(['/site/site/logout'], 'post')
+            . Html::beginForm(['/site/auth/logout'], 'post')
             . Html::submitButton(
                 'Logout (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
@@ -68,9 +76,9 @@ unset($languages[$lang]);
     }
     $langItems = [];
     foreach ($languages as $key => $value){
-        $langItems[] = ['label' => $value, 'url' => ['/site/site/lang','lang' => $key]];
+        $langItems[] = ['label' => $value, 'url' => ['/site/auth/lang','lang' => $key]];
     }
-    $menuItems[] = ['label' => $activeLangLabel, 'url' => ['/site/site/lang','lang' => $lang],
+    $menuItems[] = ['label' => $activeLangLabel, 'url' => ['/site/auth/lang','lang' => $lang],
         'items' => $langItems,
     ];
     echo Nav::widget([
