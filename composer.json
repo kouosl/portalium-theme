@@ -1,6 +1,6 @@
 {
     "name": "kouosl/portal-theme",
-    "description": "The theme module for KOUOSL.",
+    "description": "Theme module for KOUOSL PORTAL",
     "type": "yii2-extension",
     "keywords": ["yii2", "yii 2", "theme", "metronic"],
     "license": "BSD-3-Clause",
