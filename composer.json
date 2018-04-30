@@ -1,13 +1,17 @@
 {
-    "name": "kouosl/theme",
-    "description": "The theme module for Yii framework.",
+    "name": "kouosl/portal-theme",
+    "description": "Theme module for KOUOSL PORTAL",
     "type": "yii2-extension",
     "keywords": ["yii2", "yii 2", "theme", "metronic"],
     "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "İbrahim Aşık",
-            "email": "info@kouosl.com.tr"
+            "email": "info@kouosl.org"
+        },
+        {
+            "name": "Ekrem HATİPOĞLU",
+            "email": "ekrem.hatipoglu@outlook.com"
         }
     ],
     "autoload": {
