@@ -71,7 +71,7 @@ unset($languages[$lang]);
     ]);
     $menuItems = [
         ['label' => Module::t('theme','Home'), 'url' => ['/site/home']],
-        ['label' => Module::t('theme','Sample'), 'url' => ['/sample/default/index']],
+        
     ];
     if($settings['about'] === 'true')
          $menuItems[] = ['label' => Module::t('theme','About'), 'url' => ['/site/auth/about']];
