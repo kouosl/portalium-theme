@@ -4,25 +4,14 @@ namespace kouosl\theme;
 
 use Yii;
 
-
-/**
- * Module [[Theme]]
- * Yii2 theme module.
- */
-class Module extends \yii\base\Module
-{
-    //public $controllerNamespace = 'kouosl\theme\controllers\backend';
-
-
-    public function init()
-    {
+class Module extends \yii\base\Module{
+    public function init(){
         parent::init();
         $this->registerTranslations();
     }
 
 
-    public function registerTranslations()
-    {
+    public function registerTranslations(){
         Yii::$app->i18n->translations['theme/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'en-US',
@@ -33,8 +22,7 @@ class Module extends \yii\base\Module
         ];
     }
 
-    public static function t($category, $message, $params = [], $language = null)
-    {
+    public static function t($category, $message, $params = [], $language = null){
         Yii::$app->i18n->translations['theme/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'en-US',
@@ -43,9 +31,6 @@ class Module extends \yii\base\Module
                 'theme/theme' => 'theme.php',
             ],
         ];
-
         return Yii::t('theme/' . $category, $message, $params, $language);
     }
-
-
 }
