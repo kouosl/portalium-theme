@@ -1,8 +1,5 @@
 <?php
 
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use kouosl\theme\helpers\Html;
 use kouosl\theme\widgets\Nav;
 use kouosl\theme\widgets\NavBar;
@@ -43,7 +40,7 @@ $activeLangLabel = $languages[$lang];
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Portal',
+        'brandLabel' => Html::encode($settings['title']),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
