@@ -9,18 +9,22 @@ use kouosl\theme\widgets\NavBar;
 use kouosl\theme\widgets\Breadcrumbs;
 use kouosl\theme\widgets\Alert;
 use kouosl\theme\bundles\CustomAsset;
+use kouosl\theme\Module;
+use kouosl\site\models\Setting;
 
 CustomAsset::register($this);
 
+/* Get All Settings */
+$settings = Setting::find()->asArray()->all();
+foreach ($settings as $setting){
+    $settings[$setting['setting_key']] = $setting['value'];
+}
+
+/* Language Configuration */
 $languages = ['tr-TR' => 'Türkçe','en-US' => 'English'];
-
-$lang = yii::$app->session->get('lang');
-if(!$lang)
-    $lang = 'en-US';
-
+$lang = (!Yii::$app->session->get('lang')) ? $settings['language'] : Yii::$app->session->get('lang');
+Yii::$app->session->set('lang',$lang);
 $activeLangLabel = $languages[$lang];
-unset($languages[$lang]);
-
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -39,7 +43,7 @@ unset($languages[$lang]);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Portal',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',

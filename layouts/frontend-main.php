@@ -1,50 +1,27 @@
 <?php
 
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use kouosl\theme\helpers\Html;
 use kouosl\theme\widgets\Nav;
 use kouosl\theme\widgets\NavBar;
 use kouosl\theme\widgets\Breadcrumbs;
 use kouosl\theme\widgets\Alert;
 use kouosl\theme\bundles\CustomAsset;
-use \kouosl\theme\Module;
-use \kouosl\site\models\Setting;
+use kouosl\theme\Module;
+use kouosl\site\models\Setting;
 
 CustomAsset::register($this);
 
-$languages = ['tr-TR' => 'Türkçe','en-US' => 'English'];
-// $signup = Setting::findOne(['setting_key' =>  'signup']);
-// $contact = Setting::findOne(['setting_key' =>  'contact']);
-// $login = Setting::findOne(['setting_key' =>  'login']);
-// $about = Setting::findOne(['setting_key' =>  'about']);
+/* Get All Settings */
 $settings = Setting::find()->asArray()->all();
 foreach ($settings as $setting){
     $settings[$setting['setting_key']] = $setting['value'];
 }
 
- $lang = yii::$app->session->get('lang');
-// if(!$lang)
-// $lang = 'en-US';
-
-switch ($settings['language']) {
-    case 'EN':
-         $lang = 'en-US';
-         break;
-    case 'TR':
-         $lang = 'tr-TR';
-        break;
-    default:
-          $lang = 'en-US';
-        break;
-}
-yii::$app->session->set('lang',$lang);
-
+/* Language Configuration */
+$languages = ['tr-TR' => 'Türkçe','en-US' => 'English'];
+$lang = (!Yii::$app->session->get('lang')) ? $settings['language'] : Yii::$app->session->get('lang');
+Yii::$app->session->set('lang',$lang);
 $activeLangLabel = $languages[$lang];
-unset($languages[$lang]);
-
-
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -63,7 +40,7 @@ unset($languages[$lang]);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => Html::encode($settings['title']),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -95,7 +72,6 @@ unset($languages[$lang]);
             . '</li>';
     }
     
-
     $langItems = [];
     foreach ($languages as $key => $value){
         $langItems[] = ['label' => $value, 'url' => ['/site/auth/lang','lang' => $key]];
