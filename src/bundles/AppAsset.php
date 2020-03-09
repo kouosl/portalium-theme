@@ -1,15 +1,15 @@
 <?php
 
-namespace kouosl\theme\bundles;
+namespace portalium\theme\bundles;
 
 use yii\web\AssetBundle;
 
-class CustomAsset extends AssetBundle {
+class AppAsset extends AssetBundle {
 
     /**
      * @var string source assets path
      */
-    public $sourcePath = '@kouosl/theme/assets/apps/custom/';
+    public $sourcePath = '@portalium/theme/assets/apps/custom/';
 
     /**
      * @var array depended bundles
@@ -37,6 +37,5 @@ class CustomAsset extends AssetBundle {
     public function init()
     {
         parent::init();
-        // $this->js[] = 'i18n/' . Yii::$app->language . '.js'; // dynamic file added
     }
 }

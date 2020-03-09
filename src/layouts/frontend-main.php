@@ -1,15 +1,15 @@
 <?php
 
-use kouosl\theme\helpers\Html;
-use kouosl\theme\widgets\Nav;
-use kouosl\theme\widgets\NavBar;
-use kouosl\theme\widgets\Breadcrumbs;
-use kouosl\theme\widgets\Alert;
-use kouosl\theme\bundles\CustomAsset;
-use kouosl\theme\Module;
-use kouosl\site\models\Setting;
+use portalium\theme\helpers\Html;
+use portalium\theme\widgets\Nav;
+use portalium\theme\widgets\NavBar;
+use portalium\theme\widgets\Breadcrumbs;
+use portalium\theme\widgets\Alert;
+use portalium\theme\bundles\AppAsset;
+use portalium\theme\Module;
+use portalium\site\models\Setting;
 
-CustomAsset::register($this);
+AppAsset::register($this);
 
 /* Get All Settings */
 $settings = Setting::find()->asArray()->all();

@@ -1,8 +1,8 @@
 <?php
 
-namespace kouosl\theme\helpers;
+namespace portalium\theme\helpers;
 
-
-class Html extends \yii\bootstrap\Html {
+abstract class Html extends \yii\bootstrap\Html
+{
 
 }
