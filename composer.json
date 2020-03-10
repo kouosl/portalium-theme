@@ -2,7 +2,6 @@
 	"name" : "portalium/portalium-theme",
 	"description" : "Portalium Theme Module",
 	"type" : "portalium-theme",
-	"keywords" : ["portalium", "module", "theme", "yii2", "yii", "php"],
 	"license": "MIT",
 	"homepage" : "http://portalium.dev",
 	"authors" : [
