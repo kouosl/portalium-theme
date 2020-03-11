@@ -19,8 +19,7 @@ foreach ($settings as $setting){
 
 /* Language Configuration */
 $languages = ['tr-TR' => 'Türkçe','en-US' => 'English'];
-$lang = (!Yii::$app->session->get('lang')) ? $settings['language'] : Yii::$app->session->get('lang');
-Yii::$app->session->set('lang',$lang);
+$lang = Yii::$app->language;
 $activeLangLabel = $languages[$lang];
 ?>
 <?php $this->beginPage() ?>
@@ -47,20 +46,20 @@ $activeLangLabel = $languages[$lang];
         ],
     ]);
     $menuItems = [
-        ['label' => Module::t('theme','Home'), 'url' => ['/site/home']],
+        ['label' => Module::t('Home'), 'url' => ['/site/home']],
         
     ];
     if($settings['about'] === 'true')
-         $menuItems[] = ['label' => Module::t('theme','About'), 'url' => ['/site/auth/about']];
+         $menuItems[] = ['label' => Module::t('About'), 'url' => ['/site/auth/about']];
 
     if($settings['contact'] === 'true')
-      $menuItems[] =  ['label' => Module::t('theme','Contact'), 'url' => ['/site/auth/contact']];
+      $menuItems[] =  ['label' => Module::t('Contact'), 'url' => ['/site/auth/contact']];
     if (Yii::$app->user->isGuest) {
      
         if($settings['signup'] === 'true')
-            $menuItems[] = ['label' => Module::t('theme','Sign Up'), 'url' => ['/site/auth/signup']];
+            $menuItems[] = ['label' => Module::t('Sign Up'), 'url' => ['/site/auth/signup']];
         if($settings['login'] === 'true')
-            $menuItems[] = ['label' => Module::t('theme','Login'), 'url' => ['/site/auth/login']];
+            $menuItems[] = ['label' => Module::t('Login'), 'url' => ['/site/auth/login']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/auth/logout'], 'post')
@@ -74,9 +73,9 @@ $activeLangLabel = $languages[$lang];
     
     $langItems = [];
     foreach ($languages as $key => $value){
-        $langItems[] = ['label' => $value, 'url' => ['/site/auth/lang','lang' => $key]];
+        $langItems[] = ['label' => $value, 'url' => ['/site/home/lang','lang' => $key]];
     }
-    $menuItems[] = ['label' => $activeLangLabel, 'url' => ['/site/auth/lang','lang' => $lang],
+    $menuItems[] = ['label' => $activeLangLabel, 'url' => ['/site/home/lang','lang' => $lang],
         'items' => $langItems,
     ];
 
@@ -98,9 +97,9 @@ $activeLangLabel = $languages[$lang];
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Kocaeli University Open Source Lab <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Portalium <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right">DigiNova</p>
     </div>
 </footer>
 

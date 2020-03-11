@@ -3,10 +3,18 @@ namespace portalium\theme;
 
 use Yii;
 
-class Module extends \yii\base\Module
+class Module extends \portalium\base\Module
 {
-    public function init()
+
+    public static function moduleInit()
     {
-        parent::init();
+        self::registerTranslation('theme','@portalium/theme/messages',[
+            'theme/theme' => 'theme.php',
+        ]);
+    }
+
+    public static function t($message, array $params = [])
+    {
+        return parent::coreT('theme', $message, $params);
     }
 }
