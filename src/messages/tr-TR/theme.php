@@ -3,7 +3,10 @@ return [
     'Home' => 'Anasayfa',
     'About' => 'Hakkımızda',
     'Contact' => 'İletişim',
-    'Sample' => 'Örnek',
-    'Login' => 'Giriş',
-    'Sign Up' => 'Kayıt Ol',
+    'Login' => 'Oturum Aç',
+    'Sign Up' => 'Kaydol',
+    'Settings' => 'Ayarlar',
+    'Logout' => 'Çıkış',
+    'English' => 'İngilizce',
+    'Turkish' => 'Türkçe',
 ];

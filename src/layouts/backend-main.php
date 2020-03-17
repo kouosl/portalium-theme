@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use portalium\theme\helpers\Html;
 use portalium\theme\widgets\Nav;
 use portalium\theme\widgets\NavBar;
@@ -11,16 +12,13 @@ use portalium\site\models\Setting;
 
 AppAsset::register($this);
 
-/* Get All Settings */
-$settings = Setting::find()->asArray()->all();
-foreach ($settings as $setting){
-    $settings[$setting['setting_key']] = $setting['value'];
-}
+$settings = ArrayHelper::map(Setting::find()->asArray()->all(),'key','value');
 
 /* Language Configuration */
-$languages = ['tr-TR' => 'Türkçe','en-US' => 'English'];
+$languages = json_decode($settings['languages']);
+
 $lang = Yii::$app->language;
-$activeLangLabel = $languages[$lang];
+$activeLangLabel = $languages->$lang;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -46,29 +44,17 @@ $activeLangLabel = $languages[$lang];
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/home']],
-        ['label' => 'Sample', 'url' => ['/sample/samples/index'],
-            'items' => [
-                    ['label' => 'Create', 'url' => ['/sample/samples/create']],
-                    ['label' => 'Manage', 'url' => ['/sample/samples/index']]
-            ]
-        ],
-        ['label' => 'Menu', 'url' => ['/menu/menu/index'],
-            'items' => [
-                    ['label' => 'Create', 'url' => ['/menu/menu/create']],
-                    ['label' => 'Manage', 'url' => ['/menu/menu/index']]
-            ]
-        ],
-        ['label' => 'Settings', 'url' => ['/site/setting']],
+        ['label' => Module::t('Home'), 'url' => ['/site/home']],
+        ['label' => Module::t('Settings'), 'url' => ['/site/setting']],
 
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/auth/login']];
+        $menuItems[] = ['label' => Module::t('Login'), 'url' => ['/site/auth/login']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/auth/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                Module::t('Logout'). ' (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
@@ -76,9 +62,9 @@ $activeLangLabel = $languages[$lang];
     }
     $langItems = [];
     foreach ($languages as $key => $value){
-        $langItems[] = ['label' => $value, 'url' => ['/site/home/lang','lang' => $key]];
+        $langItems[] = ['label' => Module::t($value), 'url' => ['/site/home/lang','lang' => $key]];
     }
-    $menuItems[] = ['label' => $activeLangLabel, 'url' => ['/site/home/lang','lang' => $lang],
+    $menuItems[] = ['label' => Module::t($activeLangLabel), 'url' => ['/site/home/lang','lang' => $lang],
         'items' => $langItems,
     ];
     echo Nav::widget([
@@ -100,7 +86,6 @@ $activeLangLabel = $languages[$lang];
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; Portalium <?= date('Y') ?></p>
-
         <p class="pull-right">DigiNova</p>
     </div>
 </footer>

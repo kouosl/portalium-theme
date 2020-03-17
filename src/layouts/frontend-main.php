@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use portalium\theme\helpers\Html;
 use portalium\theme\widgets\Nav;
 use portalium\theme\widgets\NavBar;
@@ -11,16 +12,12 @@ use portalium\site\models\Setting;
 
 AppAsset::register($this);
 
-/* Get All Settings */
-$settings = Setting::find()->asArray()->all();
-foreach ($settings as $setting){
-    $settings[$setting['setting_key']] = $setting['value'];
-}
+$settings = ArrayHelper::map(Setting::find()->asArray()->all(),'key','value');
 
 /* Language Configuration */
-$languages = ['tr-TR' => 'Türkçe','en-US' => 'English'];
+$languages = json_decode($settings['languages']);
 $lang = Yii::$app->language;
-$activeLangLabel = $languages[$lang];
+$activeLangLabel = $languages->$lang;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -49,22 +46,22 @@ $activeLangLabel = $languages[$lang];
         ['label' => Module::t('Home'), 'url' => ['/site/home']],
         
     ];
-    if($settings['about'] === 'true')
-         $menuItems[] = ['label' => Module::t('About'), 'url' => ['/site/auth/about']];
+    if($settings['page_about'] === 'true')
+         $menuItems[] = ['label' => Module::t('About'), 'url' => ['/site/home/about']];
 
-    if($settings['contact'] === 'true')
-      $menuItems[] =  ['label' => Module::t('Contact'), 'url' => ['/site/auth/contact']];
+    if($settings['page_contact'] === 'true')
+      $menuItems[] =  ['label' => Module::t('Contact'), 'url' => ['/site/home/contact']];
     if (Yii::$app->user->isGuest) {
      
-        if($settings['signup'] === 'true')
+        if($settings['page_signup'] === 'true')
             $menuItems[] = ['label' => Module::t('Sign Up'), 'url' => ['/site/auth/signup']];
-        if($settings['login'] === 'true')
+        if($settings['page_login'] === 'true')
             $menuItems[] = ['label' => Module::t('Login'), 'url' => ['/site/auth/login']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/auth/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                Module::t('Logout').' (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
@@ -73,9 +70,9 @@ $activeLangLabel = $languages[$lang];
     
     $langItems = [];
     foreach ($languages as $key => $value){
-        $langItems[] = ['label' => $value, 'url' => ['/site/home/lang','lang' => $key]];
+        $langItems[] = ['label' => Module::t($value), 'url' => ['/site/home/lang','lang' => $key]];
     }
-    $menuItems[] = ['label' => $activeLangLabel, 'url' => ['/site/home/lang','lang' => $lang],
+    $menuItems[] = ['label' => Module::t($activeLangLabel), 'url' => ['/site/home/lang','lang' => $lang],
         'items' => $langItems,
     ];
 
