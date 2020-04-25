@@ -12,12 +12,9 @@ use portalium\site\models\Setting;
 
 AppAsset::register($this);
 
-$settings = ArrayHelper::map(Setting::find()->asArray()->all(),'key','value');
+$settings = ArrayHelper::map(Setting::find()->asArray()->all(),'name','value');
+$languages = json_decode(Setting::findOne(['name' => 'app::language'])->config,true);
 
-/* Language Configuration */
-$languages = json_decode($settings['languages']);
-$lang = Yii::$app->language;
-$activeLangLabel = $languages->$lang;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -32,31 +29,45 @@ $activeLangLabel = $languages->$lang;
 </head>
 <body>
 <?php $this->beginBody() ?>
-
 <div class="wrap">
-    <?php
+<?php
     NavBar::begin([
-        'brandLabel' => Html::encode($settings['title']),
+        'brandLabel' => Html::encode($settings['app::title']),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => Module::t('Home'), 'url' => ['/site/home']],
-        
+    
+    $menuItems[] = [
+        'label' => Module::t('Home'),
+        'url' => ['/site/home']
     ];
-    if($settings['page_about'] === 'true')
-         $menuItems[] = ['label' => Module::t('About'), 'url' => ['/site/home/about']];
+    
+    if($settings['page::about'])
+         $menuItems[] = [
+             'label' => Module::t('About'),
+             'url' => ['/site/home/about']
+         ];
 
-    if($settings['page_contact'] === 'true')
-      $menuItems[] =  ['label' => Module::t('Contact'), 'url' => ['/site/home/contact']];
+    if($settings['page::contact'])
+        $menuItems[] =  [
+            'label' => Module::t('Contact'),
+            'url' => ['/site/home/contact']
+        ];
+
     if (Yii::$app->user->isGuest) {
-     
-        if($settings['page_signup'] === 'true')
-            $menuItems[] = ['label' => Module::t('Sign Up'), 'url' => ['/site/auth/signup']];
-        if($settings['page_login'] === 'true')
-            $menuItems[] = ['label' => Module::t('Login'), 'url' => ['/site/auth/login']];
+        if($settings['page::signup'])
+            $menuItems[] = [
+                'label' => Module::t('Sign Up'),
+                'url' => ['/site/auth/signup']
+            ];
+
+        if($settings['page::login'])
+            $menuItems[] = [
+                'label' => Module::t('Login'),
+                'url' => ['/site/auth/login']
+            ];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/auth/logout'], 'post')
@@ -69,10 +80,16 @@ $activeLangLabel = $languages->$lang;
     }
     
     $langItems = [];
+
     foreach ($languages as $key => $value){
-        $langItems[] = ['label' => Module::t($value), 'url' => ['/site/home/lang','lang' => $key]];
+        $langItems[] = [
+            'label' => Module::t($value),
+            'url' => ['/site/home/lang','lang' => $key]
+        ];
     }
-    $menuItems[] = ['label' => Module::t($activeLangLabel), 'url' => ['/site/home/lang','lang' => $lang],
+    $menuItems[] = [
+        'label' => Module::t($languages[Yii::$app->language]),
+        'url' => ['/site/home/lang','lang' => Yii::$app->language],
         'items' => $langItems,
     ];
 
@@ -80,9 +97,9 @@ $activeLangLabel = $languages->$lang;
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
     ]);
-    NavBar::end();
-    ?>
 
+    NavBar::end();
+?>
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
