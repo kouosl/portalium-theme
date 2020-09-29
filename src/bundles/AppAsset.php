@@ -11,6 +11,7 @@ class AppAsset extends AssetBundle
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapPluginAsset',
+        'portalium\theme\bundles\FontAwesomeAsset',
     ];
 
     public $css = [

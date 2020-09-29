@@ -3,6 +3,7 @@ namespace portalium\theme\widgets;
 
 class Portlet extends \yii\bootstrap\Widget
 {
+    public $actions = [];
     public $title;
     public $subTitle;
     public $icon;
@@ -35,8 +36,18 @@ class Portlet extends \yii\bootstrap\Widget
             {
                 echo Html::tag('span', $this->subTitle, ['class' => 'caption-helper']);
             }
+
             echo Html::endTag('div');
+            $this->_renderActions();
             echo Html::endTag('div');
+        }
+    }
+
+    private function _renderActions()
+    {
+        if (!empty($this->actions))
+        {
+            echo Html::tag('div', implode("\n", $this->actions), ['class' => 'actions']);
         }
     }
 

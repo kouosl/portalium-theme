@@ -3,13 +3,16 @@
     background: #f5f5f5;
     padding: 20px;
 }
-
+.portlet-button{
+    background: #773e8f;
+    padding: 20px;
+}
 .portlet.portlet-gray {
     background: #f7f7f7;
 }
 
 .portlet.portlet-bordered {
-    border: 1px solid #eee;
+    border: 1px solid #eeeeee;
 }
 
 /* Portlet Title */
