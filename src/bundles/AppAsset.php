@@ -6,7 +6,7 @@ use yii\web\AssetBundle;
 
 class AppAsset extends AssetBundle
 {
-    public $sourcePath = '@portalium/theme/assets/apps/custom/';
+    public $sourcePath = '@vendor/portalium/portalium-theme/src/assets/apps/custom/';
 
     public $depends = [
         'yii\web\YiiAsset',

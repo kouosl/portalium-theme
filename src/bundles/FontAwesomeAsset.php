@@ -11,7 +11,7 @@ use yii\web\AssetBundle;
 
 class FontAwesomeAsset extends AssetBundle
 {
-   public $sourcePath = '@portalium/theme/assets/plugins/font-awesome/';
+   public $sourcePath = '@vendor/portalium/portalium-theme/src/assets/plugins/font-awesome/';
 
     public $css = [
     		'css/font-awesome.min.css',
