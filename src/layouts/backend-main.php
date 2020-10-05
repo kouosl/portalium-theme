@@ -8,9 +8,10 @@ use portalium\theme\widgets\Breadcrumbs;
 use portalium\theme\widgets\Alert;
 use portalium\theme\bundles\AppAsset;
 use portalium\theme\Module;
+use portalium\theme\Theme;
 use portalium\site\models\Setting;
 
-AppAsset::register($this);
+Theme::registerAppAsset($this);
 
 $settings   = ArrayHelper::map(Setting::find()->asArray()->all(),'name','value');
 $languages  = json_decode(Setting::findOne(['name' => 'app::language'])->config,true);

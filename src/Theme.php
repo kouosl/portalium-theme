@@ -9,6 +9,8 @@ use portalium\theme\bundles\AppAsset;
 
 class Theme extends \yii\base\Component
 {
+    public static $assetsBundle;
+    
     /**
      * @var string Component name used in the application
      */
